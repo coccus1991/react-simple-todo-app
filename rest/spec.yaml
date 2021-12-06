@@ -1,0 +1,80 @@
+openapi: 3.0.3
+info:
+  title: Todo App
+  description: Simple todo app
+  version: 1.0.0
+servers:
+  - url: 'https'
+tags:
+  - name: task
+paths:
+  /task:
+    get:
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
+      tags:
+        - task
+      summary: "Get list of tasks"
+      operationId: getTasks
+    put:
+      summary: "Update an existing task"
+      operationId: updateTask
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        '404':
+          description: "Task id object doesn't exist"
+    post:
+      summary: "Create new task"
+      operationId: createTask
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+      requestBody:
+        $ref: '#/components/requestBodies/Task'
+  /task/{taskId}:
+    delete:
+      summary: "Delete a task"
+      operationId: deteleteTask
+      parameters:
+        - name: taskId
+          in: path
+          schema:
+            type: string
+          description: "ID of the task"
+          required: true
+      responses:
+        default:
+          description: successful delete operation
+components:
+  requestBodies:
+    Task:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Task'
+  schemas:
+    Task:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        completed:
+          type: boolean

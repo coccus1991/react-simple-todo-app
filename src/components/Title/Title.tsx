@@ -1,5 +1,5 @@
 import React from "react";
-import classes from "./Style.module.css";
+import classes from "./Style.module.scss";
 
 interface TitleProps {
     content: string;
@@ -7,6 +7,10 @@ interface TitleProps {
 
 export default (props: TitleProps) => {
     return (
-        <h1 className={classes.title}>{props.content}</h1>
+        <h1 className={classes.title}>
+            <span className={classes.element}>
+                {props.content}
+            </span>
+        </h1>
     );
 }
