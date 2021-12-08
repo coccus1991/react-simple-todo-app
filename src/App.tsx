@@ -1,12 +1,28 @@
 import React from "react";
-import Title from "./components/Title/Title";
+import {Routes, Route, Navigate, Outlet} from "react-router-dom"
 import "./assets/style/app.scss"
-import ListContainer from "./containers/List/ListContainer";
-function App () {
+import ListTasksContainer from "./containers/ListTasksContainer/ListTasksContainer";
+import MainHeader from "./components/layout/MainHeader/MainHeader";
+import AddTaskContainer from "./containers/AddTaskContainer/AddTaskContainer";
+import {HashRouter} from "react-router-dom";
+
+function App() {
     return (
-        <ListContainer />
+        <HashRouter>
+            <MainHeader/>
+            <div className="row justify-content-center pt-3">
+                <div className="col-4">
+                    <Routes>
+                        <Route path="tasks" element={<Outlet />}>
+                            <Route path="list" element={<ListTasksContainer/>}/>
+                            <Route path="add" element={<AddTaskContainer/>}/>
+                        </Route>
+                        <Route path="*" element={<Navigate to="/tasks/list"/>}/>
+                    </Routes>
+                </div>
+            </div>
+        </HashRouter>
     )
 }
-
 
 export default App;

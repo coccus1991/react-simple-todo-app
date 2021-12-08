@@ -179,6 +179,7 @@ module.exports = (env, argv) => {
             // for remove unused style css rules
             new PurgeCSSPlugin({
                 paths: glob.sync(`${PATHS.src}/**/*`, {nodir: true}),
+                safelist: ["active"]
             }),
         ],
         devServer: {
