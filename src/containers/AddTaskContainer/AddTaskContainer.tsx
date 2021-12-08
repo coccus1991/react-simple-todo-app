@@ -4,27 +4,23 @@ import TaskEntity from "../../entities/TaskEntity";
 import {useNavigate} from "react-router-dom";
 
 export default () => {
-    const taskInput = useRef(null);
+    const nameInput = useRef(null);
+    const descriptionInput = useRef(null);
     const navigate = useNavigate();
 
     const onSubmitHandler = async form => {
         form.preventDefault();
 
-        if(!taskInput.current.value)
-            return
-
         const newTask = new TaskEntity();
-        newTask.name = taskInput.current.value;
+        newTask.name = nameInput.current.value;
+        newTask.description = descriptionInput.current.value
 
         try {
-            await TaskActions.addTask(newTask)
-            taskInput.current.value = "";
+            await TaskActions.addTask(newTask);
             navigate("/tasks/list")
         } catch (e) {
 
         }
-
-
     };
 
     return (
@@ -32,8 +28,15 @@ export default () => {
             <form onSubmit={onSubmitHandler}>
                 <div className="col">
                     <div className="mb-3">
-                        <label htmlFor="exampleFormControlInput1" className="form-label">New Task</label>
-                        <input ref={taskInput} type="text" name="task" className="form-control"/>
+                        <label htmlFor="exampleFormControlInput1" className="form-label">Name</label>
+                        <input required ref={nameInput} type="text" name="task" className="form-control"/>
+                    </div>
+                </div>
+
+                <div className="col">
+                    <div className="mb-3">
+                        <label htmlFor="exampleFormControlTextarea1" className="form-label">Description</label>
+                        <textarea ref={descriptionInput} required className="form-control" rows={4} />
                     </div>
                 </div>
 
@@ -41,7 +44,6 @@ export default () => {
                     <button className="btn btn-success" type="submit">Add</button>
                 </div>
             </form>
-
         </div>
     );
 }

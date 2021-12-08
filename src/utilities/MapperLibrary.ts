@@ -13,12 +13,13 @@ export class ModelMapper<T> {
     constructor(type: { new(): T ;}){
         this._target = new type();
         this._propertyMapping = this._target.constructor._propertyMap;
+        console.log("property mapping", this._propertyMapping)
     }
 
     map(source){
-
         Object.keys(this._target).forEach((key) => {
             const mappedKey = this._propertyMapping[key]
+
             if(mappedKey){
                 this._target[key] = source[mappedKey];
             }
@@ -29,6 +30,7 @@ export class ModelMapper<T> {
 
         Object.keys(source).forEach((key)=>{
             const targetKeys = Object.keys(this._target);
+
             if(targetKeys.indexOf(key) === -1){
                 this._target[key] = source[key];
             }

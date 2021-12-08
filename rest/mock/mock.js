@@ -2,6 +2,10 @@ const express = require('express');
 const app = express();
 const { v4: uuidv4 } = require('uuid');
 
+function getUnixTime() {
+    return (Date.now() / 1000) | 0;
+}
+
 app.use(express.json());
 
 app.use(function(req, res, next) {
@@ -15,6 +19,8 @@ let tasks = [
     {
         id: "d5f21471-d27e-4ae6-b7ea-92e6245bba0c",
         name: "Clean the car",
+        created_date: getUnixTime(),
+        description: "You have to clean the dirty car",
         completed: false
     }
 ];
@@ -40,9 +46,9 @@ apiRouter.put("/task", (req, res) => {
 
 apiRouter.post("/task", (req, res) => {
     let task = {
+        ...req.body,
         id: uuidv4(),
-        name: req.body.name,
-        completed: req.body.completed
+        created_date: getUnixTime()
     };
 
     tasks.push(task);

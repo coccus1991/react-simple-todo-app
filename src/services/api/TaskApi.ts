@@ -3,6 +3,7 @@ import BaseApi, {HttpResponse} from "./BaseApi";
 interface TaskObject {
     id?: string
     name: string,
+    description: string,
     completed: boolean
 }
 
