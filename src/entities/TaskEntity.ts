@@ -1,4 +1,4 @@
-import {propertyMap} from "../utilities/MapperLibrary";
+import {propertyMap} from "../utilities/MapperLibrary/MapperLibrary";
 import BaseEntity from "./BaseEntity";
 
 export default class TaskEntity extends BaseEntity {
@@ -6,7 +6,7 @@ export default class TaskEntity extends BaseEntity {
     id: string;
 
     @propertyMap("created_date")
-    create_date: number;
+    created_date: number;
 
     @propertyMap("name")
     name: string;

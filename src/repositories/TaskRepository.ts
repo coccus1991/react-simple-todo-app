@@ -1,6 +1,6 @@
 import TaskEntity from "../entities/TaskEntity";
 import {TaskApi} from "../services/api/TaskApi";
-import {ModelMapper} from "../utilities/MapperLibrary";
+import {ModelMapper} from "../utilities/MapperLibrary/MapperLibrary";
 
 export interface TaskRepositoryInterface {
     getTasks(): Promise<Array<TaskEntity>>;

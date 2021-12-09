@@ -24,8 +24,7 @@ export default () => {
         }
         return true;
     }).sort((a, b) => {
-        console.log(a.create_date, b.create_date)
-        return 0
+        return b.created_date - a.created_date
     });
 
     const onEditStatusHandler = (task: TaskEntity) => {
