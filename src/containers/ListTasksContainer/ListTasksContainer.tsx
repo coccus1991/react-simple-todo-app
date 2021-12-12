@@ -6,6 +6,7 @@ import {TaskActions} from "../../store/actions/TaskActions";
 import classes from "./ListTasksContainer.module.scss"
 import TaskCard from "../../components/ui/TaskCard/TaskCard";
 import TaskEntity from "../../entities/TaskEntity";
+import AlertService from "../../services/alert/AlertService";
 
 
 export default () => {
@@ -32,8 +33,20 @@ export default () => {
         TaskActions.updateTask(task);
     }
 
-    const onDeleteHandler = (task: TaskEntity) => {
-        TaskActions.deleteTask(task)
+    const onDeleteHandler = async (task: TaskEntity) => {
+        const check = await AlertService.confirm({
+            text: "Do you wanna delete the task?"
+        });
+
+        if (!check) return;
+
+        try {
+            TaskActions.deleteTask(task)
+            AlertService.success({text: "Task deleted with success!"})
+        } catch (e) {
+            AlertService.error({text: "Something went wrong..."});
+        }
+
     }
 
     useEffect(() => {
@@ -45,9 +58,12 @@ export default () => {
             <div className="col-12 mb-4">
                 <h3 className="mb-3">Filter</h3>
                 <div className="btn-group col-12" role="group" aria-label="Basic outlined example">
-                    <Link className={`btn btn-outline-primary ${filter === "all" ? "active" : ""}`} to={"?filter=all"}>All</Link>
-                    <Link className={`btn btn-outline-primary ${filter === "todo" ? "active" : ""}`} to={"?filter=todo"}>TODO</Link>
-                    <Link className={`btn btn-outline-primary ${filter === "completed" ? "active" : ""}`} to={"?filter=completed"}>Completed</Link>
+                    <Link className={`btn btn-outline-primary ${filter === "all" ? "active" : ""}`}
+                          to={"?filter=all"}>All</Link>
+                    <Link className={`btn btn-outline-primary ${filter === "todo" ? "active" : ""}`}
+                          to={"?filter=todo"}>TODO</Link>
+                    <Link className={`btn btn-outline-primary ${filter === "completed" ? "active" : ""}`}
+                          to={"?filter=completed"}>Completed</Link>
                 </div>
                 <hr/>
             </div>

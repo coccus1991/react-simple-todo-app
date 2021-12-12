@@ -1,40 +1,66 @@
-import Swal from 'sweetalert2';
+import Swal, {SweetAlertOptions} from 'sweetalert2';
 import Snackbar from "node-snackbar";
 
 
 export default class AlertService {
-    static success(text: string) {
-        Swal.fire({
-            text: text,
-            icon: "success"
-        });
+    static success(params: {
+        text?: string,
+        timer?: number
+    }) {
+        const opts: SweetAlertOptions = {
+            text: "",
+            icon: 'success',
+            showCloseButton: false,
+            showCancelButton: false,
+            ...params
+        }
+
+        Swal.fire(opts);
     }
 
-    static error(text: string, onClose: Function = () => {
+    static error(params: {
+        text?: string,
+        timer?: number
     }) {
-        Swal.fire({
-            text: text,
-            icon: "error",
-            // onClose: (popup: HTMLElement) {
-            //     onClose(popup);
-            // }
-        });
+        const opts: SweetAlertOptions = {
+            text: "",
+            icon: 'error',
+            showCloseButton: false,
+            showCancelButton: false,
+            ...params
+        }
+
+        Swal.fire(opts);
+    }
+
+    static closeAlert() {
+        Swal.close()
     }
 
     static snackbar(config: SnackbarOptions) {
         Snackbar.show(config);
     }
 
-    static confirm(text: string, title: string = 'Are you sure?'): Promise<boolean> {
+    static confirm(params: {
+        text?: string,
+        title?: string,
+        showCancelButton?: boolean,
+        confirmButtonText?: string,
+        cancelButtonText?: string,
+        timer?: number
+    }): Promise<boolean> {
+
+        const opts: SweetAlertOptions = {
+            text: "",
+            title: 'Are you sure?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, keep it',
+            ...params
+        }
         return new Promise<boolean>((res, rej) => {
-            Swal.fire({
-                title: title,
-                text: text,
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Yes, delete it!',
-                cancelButtonText: 'No, keep it'
-            }).then((result) => {
+            Swal.fire(opts).then((result) => {
                 res(result.value);
             });
         });

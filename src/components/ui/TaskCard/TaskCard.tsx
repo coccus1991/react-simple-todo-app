@@ -11,13 +11,13 @@ interface TaskCardComponentInterface {
 export default (props: TaskCardComponentInterface) => {
     const onDeleteHandler = () => {
         if (props.onDelete) {
-            props.onDelete(props.task)
+            props.onDelete(props.task);
         }
     }
 
     const onEditStatusHandler = () => {
         if (props.onEditStatus) {
-            props.onEditStatus(props.task)
+            props.onEditStatus(props.task);
         }
     }
     return (

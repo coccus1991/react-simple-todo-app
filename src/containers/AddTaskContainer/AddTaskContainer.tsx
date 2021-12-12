@@ -2,6 +2,7 @@ import React, {useRef} from "react";
 import {TaskActions} from "../../store/actions/TaskActions";
 import TaskEntity from "../../entities/TaskEntity";
 import {useNavigate} from "react-router-dom";
+import AlertService from "../../services/alert/AlertService";
 
 export default () => {
     const nameInput = useRef(null);
@@ -13,13 +14,14 @@ export default () => {
 
         const newTask = new TaskEntity();
         newTask.name = nameInput.current.value;
-        newTask.description = descriptionInput.current.value
+        newTask.description = descriptionInput.current.value;
 
         try {
             await TaskActions.addTask(newTask);
+            AlertService.success({text: "New task added with success!"})
             navigate("/tasks/list")
         } catch (e) {
-
+            AlertService.error({text: "Something went wrong..."});
         }
     };
 
@@ -36,7 +38,7 @@ export default () => {
                 <div className="col">
                     <div className="mb-3">
                         <label htmlFor="exampleFormControlTextarea1" className="form-label">Description</label>
-                        <textarea ref={descriptionInput} required className="form-control" rows={4} />
+                        <textarea ref={descriptionInput} required className="form-control" rows={4}/>
                     </div>
                 </div>
 
