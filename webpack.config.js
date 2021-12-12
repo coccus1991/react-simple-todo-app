@@ -16,11 +16,6 @@ module.exports = (env, argv) => {
         entry: {
             client: './src/index.tsx'
         },
-        resolveLoader: {
-            alias: {
-                "do-nothing-loader": "./do-nothing-loader.js"
-            }
-        },
         module: {
             rules: [
                 {
@@ -113,11 +108,30 @@ module.exports = (env, argv) => {
                     },
                 },
                 {
-                    test: /\.(sa|sc|c)ss$/,
+                    test: /module\.(sa|sc|c)ss$/,
                     use: [
-                        devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
-                        info => info.resource.includes(".module.") ? "css-modules-typescript-loader" : 'do-nothing-loader',
-                        'css-loader',
+                        MiniCssExtractPlugin.loader,
+                        "css-modules-typescript-loader",
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                modules: {
+                                    localIdentName: "css_module_[hash:base64:8]"
+                                }
+                            }
+                        },
+                        'sass-loader',
+                    ]
+                },
+
+                {
+                    test: /\.(sa|sc|c)ss$/,
+                    exclude: [
+                        /module\.(sa|sc|c)ss$/
+                    ],
+                    use: [
+                        MiniCssExtractPlugin.loader,
+                        "css-loader",
                         'sass-loader',
                     ]
                 },
@@ -134,8 +148,7 @@ module.exports = (env, argv) => {
             ]
         },
         resolve: {
-            extensions: ['.tsx', '.ts', '.mjs', '.js', '.jsx'],
-            // mainFields: ['svelte', 'browser', 'module', 'main']
+            extensions: ['.tsx', '.ts', '.mjs', '.js', '.jsx']
         },
         output: {
             path: __dirname + '/dist',
@@ -179,7 +192,10 @@ module.exports = (env, argv) => {
             // for remove unused style css rules
             new PurgeCSSPlugin({
                 paths: glob.sync(`${PATHS.src}/**/*`, {nodir: true}),
-                safelist: ["active"]
+                safelist: [
+                    /css_module_*/,
+                    "active"
+                ]
             }),
         ],
         devServer: {
