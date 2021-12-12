@@ -14,4 +14,4 @@ Config.getInstance().loadConfig().then(() => {
         </React.StrictMode>,
         document.getElementById("root")
     );
-});
+}).catch(e => console.log(e.message));
