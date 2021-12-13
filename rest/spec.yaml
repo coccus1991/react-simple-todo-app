@@ -76,5 +76,9 @@ components:
           type: string
         name:
           type: string
+        created_date:
+          type: number
+        description:
+          type: string
         completed:
           type: boolean

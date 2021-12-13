@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const { v4: uuidv4 } = require('uuid');
+const {v4: uuidv4} = require('uuid');
 
 function getUnixTime() {
     return (Date.now() / 1000) | 0;
@@ -8,7 +8,7 @@ function getUnixTime() {
 
 app.use(express.json());
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', "*");
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
     res.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Authorization');
@@ -36,7 +36,7 @@ apiRouter.put("/task", (req, res) => {
 
     const index = tasks.findIndex(elem => elem.id === task.id);
 
-    if(index < 0)
+    if (index < 0)
         return res.status(404).json();
 
     tasks[index] = task;
@@ -57,10 +57,10 @@ apiRouter.post("/task", (req, res) => {
 });
 
 apiRouter.delete("/task/:id", (req, res) => {
-    tasks = tasks.filter( elem => elem.id !== req.params.id);
+    tasks = tasks.filter(elem => elem.id !== req.params.id);
     res.send("");
 });
 
-app.use("/api",apiRouter);
+app.use("/api", apiRouter);
 
 app.listen(8000, () => console.log('Server listening on port 8000'));

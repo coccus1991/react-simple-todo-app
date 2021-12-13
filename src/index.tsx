@@ -5,7 +5,6 @@ import store from "./store";
 import App from "./App";
 import Config from "./services/config/config";
 
-
 Config.getInstance().loadConfig().then(() => {
     ReactDOM.render(
         <React.StrictMode>
