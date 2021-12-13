@@ -10,6 +10,7 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "module": "esnext",
+    "resolveJsonModule": true,
     "moduleResolution": "Node",
     "lib": [
       "dom",
