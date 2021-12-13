@@ -8,14 +8,18 @@ interface TaskObject {
 }
 
 export class TaskApi extends BaseApi {
-    private contextApi = "/task";
+
+    constructor() {
+        super();
+        this.contextApi = "task";
+    }
 
     /**
      * @throws HttpError
      * @return HttpResponse
      */
     getTasks(): Promise<HttpResponse> {
-        return this.getClient().get(this.contextApi);
+        return this.getClient().get("");
     }
 
     /**
@@ -23,8 +27,8 @@ export class TaskApi extends BaseApi {
      * @return HttpResponse
      * @param task
      */
-    addTask(task: TaskObject): Promise<HttpResponse>  {
-        return this.getClient().post(this.contextApi, task);
+    addTask(task: TaskObject): Promise<HttpResponse> {
+        return this.getClient().post("", task);
     }
 
     /**
@@ -32,8 +36,8 @@ export class TaskApi extends BaseApi {
      * @return HttpResponse
      * @param task
      */
-    updateTask(task: TaskObject): Promise<HttpResponse>  {
-        return this.getClient().put(this.contextApi, task);
+    updateTask(task: TaskObject): Promise<HttpResponse> {
+        return this.getClient().put("", task);
     }
 
     /**
@@ -41,7 +45,7 @@ export class TaskApi extends BaseApi {
      * @return HttpResponse
      * @param id
      */
-    deleteTask(id: string): Promise<HttpResponse>  {
-        return this.getClient().delete(`${this.contextApi}/${id}`);
+    deleteTask(id: string): Promise<HttpResponse> {
+        return this.getClient().delete(`/${id}`);
     }
 }

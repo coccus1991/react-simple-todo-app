@@ -1,4 +1,3 @@
-// @ts-ignore
 import axios, {AxiosResponse} from 'axios';
 import config from "../config/config";
 
@@ -22,29 +21,16 @@ export class HttpError extends Error {
 }
 
 export class HttpResponse {
-    public data: string;
-    public status: number;
-    public statusText: string;
-    public headers: Array<any>
-
-
-    constructor(data, status, statusText, headers) {
-        this.data = data;
-        this.status = status;
-        this.statusText = statusText;
-        this.headers = headers;
-    }
+    constructor(public data: string, public status: number, public statusText: string, public headers: Record<string, string>) {}
 }
 
 export default class BaseApi {
-    private token: string;
 
+    protected contextApi = "";
     /**
      * @param token
      */
-    constructor(token?) {
-        this.token = token;
-    }
+    constructor(private token?: string) {}
 
     /**
      * @returns {AxiosInstance}
@@ -56,11 +42,10 @@ export default class BaseApi {
             headers.Authorization = `Bearer ${this.token}`;
 
         const client = axios.create({
-            baseURL: config.getInstance().getProperty("api.baseUrl") + "/api",
+            baseURL: config.getInstance().getProperty("api.baseUrl", "") + "/api/" + this.contextApi.replace(/^\//, ""),
             headers: headers
         });
 
-        // @ts-ignore
         client.interceptors.response.use((response: AxiosResponse) => {
            return new HttpResponse(response.data, response.status, response.statusText, response.headers)
         }, (error) => {

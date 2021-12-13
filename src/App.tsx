@@ -1,10 +1,12 @@
-import React, {useEffect} from "react";
+import React, {Suspense} from "react";
 import {Routes, Route, Navigate, Outlet} from "react-router-dom"
 import "./assets/style/app.scss"
-import ListTasksContainer from "./containers/ListTasksContainer/ListTasksContainer";
 import MainHeader from "./components/layout/MainHeader/MainHeader";
-import AddTaskContainer from "./containers/AddTaskContainer/AddTaskContainer";
 import {HashRouter} from "react-router-dom";
+import LazyComponent from "./components/ui/LazyComponent/LazyComponent";
+
+const ListTasksContainer = () => <LazyComponent import={() => import("./containers/ListTasksContainer/ListTasksContainer")}/>;
+const AddTaskContainer = () => <LazyComponent import={() => import("./containers/AddTaskContainer/AddTaskContainer")}/>;
 
 // @ts-ignore
 function App() {

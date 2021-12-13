@@ -5,11 +5,11 @@
     "jsx": "react",
     "esModuleInterop": true,
     "target": "es6",
-    "module": "es6",
     "baseUrl": "./src/",
     "sourceMap": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "module": "esnext",
     "moduleResolution": "Node",
     "lib": [
       "dom",
