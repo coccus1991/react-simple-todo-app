@@ -1,15 +1,15 @@
-import React, {Suspense} from "react";
+import React from "react";
 import {Routes, Route, Navigate, Outlet} from "react-router-dom"
 import "./assets/style/app.scss"
 import MainHeader from "./components/layout/MainHeader/MainHeader";
 import {HashRouter} from "react-router-dom";
 import LazyComponent from "./components/ui/LazyComponent/LazyComponent";
 
-const ListTasksContainer = () => <LazyComponent import={() => import("./containers/ListTasksContainer/ListTasksContainer")}/>;
+const ListTasksContainer = () => <LazyComponent
+    import={() => import("./containers/ListTasksContainer/ListTasksContainer")}/>;
 const AddTaskContainer = () => <LazyComponent import={() => import("./containers/AddTaskContainer/AddTaskContainer")}/>;
 
-// @ts-ignore
-function App() {
+const App = () => {
     return (
         <HashRouter>
             <MainHeader/>

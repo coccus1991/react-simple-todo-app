@@ -1,12 +1,11 @@
 import configLoader from "../../config/register";
 
-class NotFoundConfig extends Error {
-}
+class NotFoundConfig extends Error {}
 
 export default class Config {
     private static instance: Config;
-    private configsStore: Array<Object> = [];
-    private loadedConfig: boolean = false;
+    private configsStore: Record<string, unknown> = {};
+    private loadedConfig = false;
 
     static getInstance() {
         if (!Config.instance)
@@ -21,7 +20,7 @@ export default class Config {
         if (!this.loadedConfig) {
             for (let i = 0; i < configLoader.length; i++) {
                 module = await configLoader[i].file();
-                this.configsStore[configLoader[i]["name"]] = await fetch(module.default).then((res) => res.json());
+                this.configsStore[configLoader[i].name] = await fetch(module.default).then((res) => res.json());
             }
 
             this.loadedConfig = true;
@@ -41,7 +40,16 @@ export default class Config {
         return this.configsStore;
     }
 
-    getProperty( propertyName: string, defaultValue = null) {
-        return propertyName.split('.').reduce((acc, part) => acc && acc[part], this.configsStore) || defaultValue;
+    getProperty<T>(propertyName: string, defaultValue: T | null = null) {
+        return propertyName.split('.')
+            .reduce((acc: unknown, part: string) => {
+                if (typeof acc === "object") {
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                    // @ts-ignore
+                    return acc[part];
+                }
+
+                return acc;
+            }, this.configsStore) || defaultValue;
     }
 }

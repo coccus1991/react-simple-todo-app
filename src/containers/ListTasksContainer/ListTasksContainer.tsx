@@ -9,7 +9,7 @@ import TaskEntity from "../../entities/TaskEntity";
 import AlertService from "../../services/alert/AlertService";
 
 
-export default () => {
+const ListTasksContainer = () => {
     let tasks = useSelector((state: RootState) => state.taskStore.tasks)
     const searchParams = useSearchParams();
 
@@ -24,14 +24,14 @@ export default () => {
                 return task.completed;
         }
         return true;
-    }).sort((a, b) => {
-        return b.created_date - a.created_date
+    }).sort((a: TaskEntity, b: TaskEntity) => {
+        return (b.created_date || 0) - (a.created_date || 0)
     });
 
     const onEditStatusHandler = (task: TaskEntity) => {
         task.completed = !task.completed;
         TaskActions.updateTask(task);
-    }
+    };
 
     const onDeleteHandler = async (task: TaskEntity) => {
         const check = await AlertService.confirm({
@@ -47,11 +47,11 @@ export default () => {
             AlertService.error({text: "Something went wrong..."});
         }
 
-    }
+    };
 
     useEffect(() => {
         TaskActions.getTasks();
-    }, [])
+    }, []);
 
     return (
         <div className={`${classes.ListTasksContainer} row`}>
@@ -81,3 +81,5 @@ export default () => {
         </div>
     );
 }
+
+export default ListTasksContainer;

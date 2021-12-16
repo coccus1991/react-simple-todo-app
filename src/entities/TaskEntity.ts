@@ -3,17 +3,17 @@ import BaseEntity from "./BaseEntity";
 
 export default class TaskEntity extends BaseEntity {
     @propertyMap("id")
-    id: string;
+    id?: string;
 
     @propertyMap("created_date")
-    created_date: number;
+    created_date?: number;
 
     @propertyMap("name")
-    name: string;
+    name?: string;
 
     @propertyMap("description")
-    description: string;
+    description?: string;
 
     @propertyMap("completed")
-    completed: boolean;
+    completed?: boolean;
 }

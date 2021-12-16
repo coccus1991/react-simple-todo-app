@@ -1,10 +1,10 @@
 import React, {Suspense} from "react";
 
 interface LazyComponentPropsInterface {
-    import: () => Promise<{default: React.ComponentType<any>}>
+    import: () => Promise<{default: React.ComponentType<unknown>}>
 }
 
-export default (props: LazyComponentPropsInterface) => {
+const LazyComponent =  (props: LazyComponentPropsInterface) => {
     const Component = React.lazy(() => props.import());
 
     return (
@@ -14,3 +14,4 @@ export default (props: LazyComponentPropsInterface) => {
     )
 }
 
+export default LazyComponent;

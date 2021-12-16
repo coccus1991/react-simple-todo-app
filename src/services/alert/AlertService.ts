@@ -59,7 +59,7 @@ export default class AlertService {
             cancelButtonText: 'No, keep it',
             ...params
         }
-        return new Promise<boolean>((res, rej) => {
+        return new Promise<boolean>((res) => {
             Swal.fire(opts).then((result) => {
                 res(result.value);
             });

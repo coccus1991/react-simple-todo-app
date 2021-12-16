@@ -8,7 +8,7 @@ interface TaskCardComponentInterface {
     onEditStatus?: (task: TaskEntity) => void
 }
 
-export default (props: TaskCardComponentInterface) => {
+const TaskCard =  (props: TaskCardComponentInterface) => {
     const onDeleteHandler = () => {
         if (props.onDelete) {
             props.onDelete(props.task);
@@ -37,3 +37,5 @@ export default (props: TaskCardComponentInterface) => {
         </div>
     );
 }
+
+export default TaskCard;

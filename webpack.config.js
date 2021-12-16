@@ -4,6 +4,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require('path');
 const glob = require('glob');
 const PurgeCSSPlugin = require('purgecss-webpack-plugin')
+const ESLintPlugin = require("eslint-webpack-plugin");
 
 const PATHS = {
     src: path.join(__dirname, 'src')
@@ -172,6 +173,10 @@ module.exports = (env, argv) => {
 
         plugins: [
             new webpack.HotModuleReplacementPlugin(),
+
+            new ESLintPlugin({
+                extensions: ["js", "jsx", "ts", "tsx"],
+            }),
 
             //for adding automatically js files include on index.html
             new HtmlWebpackPlugin({

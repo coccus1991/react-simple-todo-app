@@ -1,9 +1,9 @@
 export default class BaseEntity {
 
     toJSON() {
-        let obj = {} as any;
+        const obj: Record<string, unknown> = {};
 
-        for (let n in this) {
+        for (const n in this) {
             if (!n.match(/^_/) && typeof this[n] != "function")
                 obj[n] = this[n];
         }
@@ -12,8 +12,11 @@ export default class BaseEntity {
     }
 
     set(obj: object) {
-        for (let key in obj)
-            this[key] = obj[key];
+        for (const key in obj)
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            { // @ts-ignore
+                this[key] = obj[key];
+            }
 
         return this;
     }

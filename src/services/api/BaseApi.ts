@@ -13,8 +13,8 @@ export class HttpError extends Error {
     }
 }
 
-export class HttpResponse {
-    constructor(public data: string, public status: number, public statusText: string, public headers: Record<string, string>) {
+export class HttpResponse<DateType> {
+    constructor(public data: DateType, public status: number, public statusText: string, public headers: Record<string, string>) {
     }
 }
 
@@ -32,13 +32,13 @@ export default class BaseApi {
      * @returns {AxiosInstance}
      */
     getClient() {
-        let headers = {} as any;
+        const headers: Record<string, string> = {};
 
         if (this.token)
             headers.Authorization = `Bearer ${this.token}`;
 
         const client = axios.create({
-            baseURL: config.getInstance().getProperty("api.baseUrl", "").replace(/$\//, "") + "/" + this.contextApi.replace(/^\//, ""),
+            baseURL: config.getInstance().getProperty<string>("api.baseUrl", "").replace(/$\//, "") + "/" + this.contextApi.replace(/^\//, ""),
             headers: headers
         });
 

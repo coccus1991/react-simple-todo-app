@@ -3,7 +3,8 @@ import classes from "./MainHeader.module.scss";
 import {NavLink} from "react-router-dom";
 
 
-export default () => {
+
+const MainHeader = () => {
     return (
         <header className={`${classes.mainHeader} row align-items-center`}>
                 <div className="col-4">
@@ -25,3 +26,5 @@ export default () => {
         </header>
     );
 }
+
+export default MainHeader;
