@@ -23,7 +23,7 @@ export default class TaskRepository implements TaskRepositoryInterface {
      * @throws HttpError
      */
     async getTasks(): Promise<Array<TaskEntity>> {
-    let { data } = await this.apiClient.getTasks();
+        const { data } = await this.apiClient.getTasks();
 
         return data.map((elem) => new ModelMapper(TaskEntity).map(elem));
     }

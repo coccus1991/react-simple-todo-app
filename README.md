@@ -1,6 +1,6 @@
-### Go Run
+### Getting started
 
--   `npm i` - Download dependencies
+-   `npm i` - Download dependencies and setup of husky for git hooks
 -   `npm run start` - Run npm run dev and mock commands
 -   `npm run mock` - Run mock server (http://localhost:8000)
 -   `npm run dev` - Run watch reload server for frontend app (http://localhost:3000)

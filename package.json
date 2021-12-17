@@ -4,14 +4,16 @@
     "description": "Simple react boilerplate based on webpack",
     "main": "src/index.tsx",
     "scripts": {
+        "ts-check": "tsc --noemit",
         "start": "./node_modules/.bin/run-p mock dev",
         "mock": "node rest/mock/mock.js",
         "dev": "node ./node_modules/webpack/bin/webpack.js serve --mode=development",
         "build": "webpack --mode=production --config ./webpack.config.js",
         "test": "jest --no-cache",
         "prepare": "husky install",
-        "lint": "eslint",
-        "lintstaged": "lint-staged"
+        "linter": "eslint --fix 'src/**/*.{ts,tsx,js,jsx}'",
+        "lintstaged": "lint-staged",
+        "prettier": "prettier --write src"
     },
     "author": "",
     "license": "ISC",
