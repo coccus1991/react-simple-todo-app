@@ -1,8 +1,8 @@
-import {bindActionCreators, Dispatch} from "@reduxjs/toolkit";
-import store from "../index";
-import TaskRepository from "../../repositories/TaskRepository";
-import TaskEntity from "../../entities/TaskEntity";
-import {ACTIONS} from "../reducers/TaskStore";
+import { bindActionCreators, Dispatch } from '@reduxjs/toolkit';
+import store from '../index';
+import TaskRepository from '../../repositories/TaskRepository';
+import TaskEntity from '../../entities/TaskEntity';
+import { ACTIONS } from '../reducers/TaskStore';
 
 const taskRepository: TaskRepository = new TaskRepository();
 
@@ -45,7 +45,7 @@ const taskActions = {
         } catch (e: unknown) {
             throw e;
         }
-    }
+    },
 };
 
 export const TaskActions = bindActionCreators(taskActions, store.dispatch);

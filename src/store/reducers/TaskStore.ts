@@ -1,12 +1,12 @@
-import TaskEntity from "../../entities/TaskEntity";
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import TaskEntity from '../../entities/TaskEntity';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface TaskStoreStateInterface {
-    tasks: Array<TaskEntity>
+    tasks: Array<TaskEntity>;
 }
 
 const initialState: TaskStoreStateInterface = {
-    tasks: []
+    tasks: [],
 };
 
 const taskStoreSlice = createSlice({
@@ -20,13 +20,17 @@ const taskStoreSlice = createSlice({
             state.tasks.push(action.payload);
         },
         UPDATE_TASK: (state, action: PayloadAction<TaskEntity>) => {
-            state.tasks = state.tasks.map(elem => (elem.id === action.payload.id) ? action.payload : elem)
+            state.tasks = state.tasks.map((elem) =>
+                elem.id === action.payload.id ? action.payload : elem
+            );
         },
         DELETE_TASK: (state, action: PayloadAction<TaskEntity>) => {
-            state.tasks = state.tasks.filter((elem: TaskEntity) => elem.id !== action.payload.id)
+            state.tasks = state.tasks.filter(
+                (elem: TaskEntity) => elem.id !== action.payload.id
+            );
         },
-    }
-})
+    },
+});
 
 export const ACTIONS = taskStoreSlice.actions;
 

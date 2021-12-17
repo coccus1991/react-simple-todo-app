@@ -10,21 +10,20 @@ export function propertyMap(sourceProperty: string) {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         target.constructor._propertyMap[sourceProperty] = propertyKey;
-    }
+    };
 }
-
 
 export class ModelMapper<T> {
     _propertyMapping;
     _target: T;
 
-    constructor(type: { new(): T; }) {
+    constructor(type: { new (): T }) {
         this._target = new type();
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         this._propertyMapping = this._target.constructor._propertyMap;
     }
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     map(source) {
         Object.keys(source).forEach((key) => {

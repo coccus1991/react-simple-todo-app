@@ -1,40 +1,33 @@
-import Swal, {SweetAlertOptions} from 'sweetalert2';
-import Snackbar from "node-snackbar";
-
+import Swal, { SweetAlertOptions } from 'sweetalert2';
+import Snackbar from 'node-snackbar';
 
 export default class AlertService {
-    static success(params: {
-        text?: string,
-        timer?: number
-    }) {
+    static success(params: { text?: string; timer?: number }) {
         const opts: SweetAlertOptions = {
-            text: "",
+            text: '',
             icon: 'success',
             showCloseButton: false,
             showCancelButton: false,
-            ...params
-        }
+            ...params,
+        };
 
         Swal.fire(opts);
     }
 
-    static error(params: {
-        text?: string,
-        timer?: number
-    }) {
+    static error(params: { text?: string; timer?: number }) {
         const opts: SweetAlertOptions = {
-            text: "",
+            text: '',
             icon: 'error',
             showCloseButton: false,
             showCancelButton: false,
-            ...params
-        }
+            ...params,
+        };
 
         Swal.fire(opts);
     }
 
     static closeAlert() {
-        Swal.close()
+        Swal.close();
     }
 
     static snackbar(config: SnackbarOptions) {
@@ -42,23 +35,22 @@ export default class AlertService {
     }
 
     static confirm(params: {
-        text?: string,
-        title?: string,
-        showCancelButton?: boolean,
-        confirmButtonText?: string,
-        cancelButtonText?: string,
-        timer?: number
+        text?: string;
+        title?: string;
+        showCancelButton?: boolean;
+        confirmButtonText?: string;
+        cancelButtonText?: string;
+        timer?: number;
     }): Promise<boolean> {
-
         const opts: SweetAlertOptions = {
-            text: "",
+            text: '',
             title: 'Are you sure?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Yes, delete it!',
             cancelButtonText: 'No, keep it',
-            ...params
-        }
+            ...params,
+        };
         return new Promise<boolean>((res) => {
             Swal.fire(opts).then((result) => {
                 res(result.value);

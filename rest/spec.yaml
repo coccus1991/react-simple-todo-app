@@ -4,21 +4,21 @@ info:
   description: Simple todo app
   version: 1.0.0
 servers:
-  - url: 'https'
+  - url: "https"
 tags:
   - name: task
 paths:
   /task:
     get:
       responses:
-        '200':
+        "200":
           description: Successful operation
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Task'
+                  $ref: "#/components/schemas/Task"
       tags:
         - task
       summary: "Get list of tasks"
@@ -27,26 +27,26 @@ paths:
       summary: "Update an existing task"
       operationId: updateTask
       responses:
-        '200':
+        "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Task'
-        '404':
+                $ref: "#/components/schemas/Task"
+        "404":
           description: "Task id object doesn't exist"
     post:
       summary: "Create new task"
       operationId: createTask
       responses:
-        '200':
+        "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Task'
+                $ref: "#/components/schemas/Task"
       requestBody:
-        $ref: '#/components/requestBodies/Task'
+        $ref: "#/components/requestBodies/Task"
   /task/{taskId}:
     delete:
       summary: "Delete a task"
@@ -67,7 +67,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Task'
+            $ref: "#/components/schemas/Task"
   schemas:
     Task:
       type: object

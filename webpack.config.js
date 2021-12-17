@@ -1,13 +1,13 @@
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
 const glob = require('glob');
-const PurgeCSSPlugin = require('purgecss-webpack-plugin')
-const ESLintPlugin = require("eslint-webpack-plugin");
+const PurgeCSSPlugin = require('purgecss-webpack-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
 
 const PATHS = {
-    src: path.join(__dirname, 'src')
+    src: path.join(__dirname, 'src'),
 };
 
 module.exports = (env, argv) => {
@@ -15,14 +15,14 @@ module.exports = (env, argv) => {
 
     return {
         entry: {
-            client: './src/index.tsx'
+            client: './src/index.tsx',
         },
         module: {
             rules: [
                 {
                     test: /\.(js|jsx)$/,
                     exclude: /node_modules/,
-                    use: ['babel-loader']
+                    use: ['babel-loader'],
                 },
 
                 {
@@ -30,9 +30,9 @@ module.exports = (env, argv) => {
                     use: {
                         loader: 'file-loader',
                         options: {
-                            name: "fonts/[name].[ext]"
-                        }
-                    }
+                            name: 'fonts/[name].[ext]',
+                        },
+                    },
                 },
 
                 {
@@ -40,20 +40,20 @@ module.exports = (env, argv) => {
                     include: /node_modules/,
                     type: 'javascript/auto',
                     use: {
-                        loader: 'babel-loader'
-                    }
+                        loader: 'babel-loader',
+                    },
                 },
 
                 {
                     test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
                     use: {
-                        loader: "url-loader",
+                        loader: 'url-loader',
                         options: {
-                            name: "fonts/[name].[ext]",
+                            name: 'fonts/[name].[ext]',
                             limit: 10000,
-                            mimetype: "application/font-woff"
-                        }
-                    }
+                            mimetype: 'application/font-woff',
+                        },
+                    },
                 },
 
                 {
@@ -61,9 +61,9 @@ module.exports = (env, argv) => {
                     use: {
                         loader: 'url-loader?limit=10000&mimetype=application/octet-stream',
                         options: {
-                            name: "fonts/[name].[ext]"
-                        }
-                    }
+                            name: 'fonts/[name].[ext]',
+                        },
+                    },
                 },
 
                 {
@@ -72,10 +72,10 @@ module.exports = (env, argv) => {
                         loader: 'url-loader',
                         options: {
                             limit: 10000,
-                            mimetype: "image/svg+xml",
-                            name: "fonts/[name].[ext]"
-                        }
-                    }
+                            mimetype: 'image/svg+xml',
+                            name: 'fonts/[name].[ext]',
+                        },
+                    },
                 },
 
                 {
@@ -83,9 +83,9 @@ module.exports = (env, argv) => {
                     use: {
                         loader: 'file-loader',
                         options: {
-                            name: "images/[name].[ext]"
-                        }
-                    }
+                            name: 'images/[name].[ext]',
+                        },
+                    },
                 },
 
                 {
@@ -93,9 +93,9 @@ module.exports = (env, argv) => {
                     use: {
                         loader: 'file-loader',
                         options: {
-                            name: "name=[name].[ext]"
-                        }
-                    }
+                            name: 'name=[name].[ext]',
+                        },
+                    },
                 },
 
                 {
@@ -104,7 +104,7 @@ module.exports = (env, argv) => {
                     use: {
                         loader: 'file-loader',
                         options: {
-                            name: 'configs/[name].[ext]'
+                            name: 'configs/[name].[ext]',
                         },
                     },
                 },
@@ -112,29 +112,28 @@ module.exports = (env, argv) => {
                     test: /module\.(sa|sc|c)ss$/,
                     use: [
                         MiniCssExtractPlugin.loader,
-                        "css-modules-typescript-loader",
+                        'css-modules-typescript-loader',
                         {
                             loader: 'css-loader',
                             options: {
                                 modules: {
-                                    localIdentName: "css_module_[hash:base64:8]"
-                                }
-                            }
+                                    localIdentName:
+                                        'css_module_[hash:base64:8]',
+                                },
+                            },
                         },
                         'sass-loader',
-                    ]
+                    ],
                 },
 
                 {
                     test: /\.(sa|sc|c)ss$/,
-                    exclude: [
-                        /module\.(sa|sc|c)ss$/
-                    ],
+                    exclude: [/module\.(sa|sc|c)ss$/],
                     use: [
                         MiniCssExtractPlugin.loader,
-                        "css-loader",
+                        'css-loader',
                         'sass-loader',
-                    ]
+                    ],
                 },
 
                 {
@@ -143,18 +142,20 @@ module.exports = (env, argv) => {
                     exclude: [
                         /node_modules/,
                         '/**/*.test.tsx',
-                        '/**/*.test.ts'
+                        '/**/*.test.ts',
                     ],
                 },
-            ]
+            ],
         },
         resolve: {
-            extensions: ['.tsx', '.ts', '.mjs', '.js', '.jsx']
+            extensions: ['.tsx', '.ts', '.mjs', '.js', '.jsx'],
         },
         output: {
             path: __dirname + '/dist',
             publicPath: '',
-            filename: devMode ? 'scripts/[name].bundle.js' : 'scripts/[name].[contenthash].bundle.js',
+            filename: devMode
+                ? 'scripts/[name].bundle.js'
+                : 'scripts/[name].[contenthash].bundle.js',
         },
 
         //split of the bundle
@@ -165,17 +166,17 @@ module.exports = (env, argv) => {
                         chunks: 'initial',
                         name: 'vendor',
                         test: /\/node_modules\//,
-                        enforce: true
-                    }
-                }
-            }
+                        enforce: true,
+                    },
+                },
+            },
         },
 
         plugins: [
             new webpack.HotModuleReplacementPlugin(),
 
             new ESLintPlugin({
-                extensions: ["js", "jsx", "ts", "tsx"],
+                extensions: ['js', 'jsx', 'ts', 'tsx'],
             }),
 
             //for adding automatically js files include on index.html
@@ -183,24 +184,25 @@ module.exports = (env, argv) => {
                 template: 'src/index.ejs',
                 minify: {
                     removeComments: true,
-                    collapseWhitespace: true
+                    collapseWhitespace: true,
                 },
-                inject: true
+                inject: true,
             }),
 
             //for extracting css/scss code and create bundle.css
             new MiniCssExtractPlugin({
-                filename: devMode ? 'css/[name].css' : 'css/[name].[contenthash].css',
-                chunkFilename: devMode ? 'css/[id].css' : 'css/[id].[contenthash].css',
+                filename: devMode
+                    ? 'css/[name].css'
+                    : 'css/[name].[contenthash].css',
+                chunkFilename: devMode
+                    ? 'css/[id].css'
+                    : 'css/[id].[contenthash].css',
             }),
 
             // for remove unused style css rules
             new PurgeCSSPlugin({
-                paths: glob.sync(`${PATHS.src}/**/*`, {nodir: true}),
-                safelist: [
-                    /css_module_*/,
-                    "active"
-                ]
+                paths: glob.sync(`${PATHS.src}/**/*`, { nodir: true }),
+                safelist: [/css_module_*/, 'active'],
             }),
         ],
         devServer: {
@@ -208,6 +210,6 @@ module.exports = (env, argv) => {
             hot: true,
             port: 3000,
             historyApiFallback: true,
-        }
+        },
     };
 };

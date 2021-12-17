@@ -1,18 +1,17 @@
-import BaseApi, {HttpResponse} from "./BaseApi";
+import BaseApi, { HttpResponse } from './BaseApi';
 
 export interface TaskObject {
-    id?: string
-    name: string,
-    description: string,
-    created_date?: number
-    completed: boolean
+    id?: string;
+    name: string;
+    description: string;
+    created_date?: number;
+    completed: boolean;
 }
 
 export class TaskApi extends BaseApi {
-
     constructor() {
         super();
-        this.contextApi = "task";
+        this.contextApi = 'task';
     }
 
     /**
@@ -20,7 +19,7 @@ export class TaskApi extends BaseApi {
      * @return HttpResponse
      */
     getTasks(): Promise<HttpResponse<Array<TaskObject>>> {
-        return this.getClient().get("");
+        return this.getClient().get('');
     }
 
     /**
@@ -29,7 +28,7 @@ export class TaskApi extends BaseApi {
      * @param task
      */
     addTask(task: TaskObject): Promise<HttpResponse<TaskObject>> {
-        return this.getClient().post("", task);
+        return this.getClient().post('', task);
     }
 
     /**
@@ -38,7 +37,7 @@ export class TaskApi extends BaseApi {
      * @param task
      */
     updateTask(task: TaskObject): Promise<HttpResponse<TaskObject>> {
-        return this.getClient().put("", task);
+        return this.getClient().put('', task);
     }
 
     /**
