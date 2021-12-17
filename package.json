@@ -8,7 +8,8 @@
     "mock": "node rest/mock/mock.js",
     "dev": "node ./node_modules/webpack/bin/webpack.js serve --mode=development",
     "build": "webpack --mode=production --config ./webpack.config.js",
-    "test": "jest --no-cache"
+    "test": "jest --no-cache",
+    "prepare": "husky install"
   },
   "author": "",
   "license": "ISC",
@@ -39,6 +40,7 @@
     "file-loader": "^6.2.0",
     "glob": "^7.2.0",
     "html-webpack-plugin": "^5.5.0",
+    "husky": "^7.0.4",
     "jest": "^27.4.3",
     "jest-css-modules": "^2.1.0",
     "mini-css-extract-plugin": "^2.4.5",

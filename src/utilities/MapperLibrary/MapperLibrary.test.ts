@@ -2,11 +2,11 @@ import {ModelMapper, propertyMap} from "./MapperLibrary";
 
 class User {
     @propertyMap("first_name")
-    name: string = null;
+    name = "";
 
-    surname: string = null;
+    surname = "";
 
-    age: number = null;
+    age  = 0;
 }
 
 test('test mapping', () => {
@@ -16,7 +16,7 @@ test('test mapping', () => {
     expect(user.name).toBe("pippo");
 
     //case neither property-map nor the property has the same key of the source, expected the value keeps null
-    expect(user.surname).toBe(null);
+    expect(user.surname).toBe("");
 
     //case where exist the same key of the source, expected will be mapped
     expect(user.age).toBe(20);
