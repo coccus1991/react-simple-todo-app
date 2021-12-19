@@ -10,11 +10,10 @@ export default class BaseEntity {
         return obj;
     }
 
-    set(obj: object) {
-        for (const key in obj) {
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            this[key] = obj[key];
+    set(obj: unknown) {
+        for (const key in obj as this) {
+            if (typeof this[key] !== undefined)
+                this[key as keyof this] = (obj as this)[key as keyof this];
         }
 
         return this;

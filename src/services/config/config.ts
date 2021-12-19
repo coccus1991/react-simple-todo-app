@@ -41,17 +41,15 @@ export default class Config {
         return this.configsStore;
     }
 
-    getProperty<T>(propertyName: string, defaultValue: T | null = null) {
-        return (
-            propertyName.split('.').reduce((acc: unknown, part: string) => {
-                if (typeof acc === 'object') {
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                    // @ts-ignore
-                    return acc[part];
-                }
+    getProperty<T>(propertyName: string, defaultValue: T): T {
+        const result = propertyName
+            .split('.')
+            .reduce(
+                (acc: unknown, part: string) =>
+                    acc && (acc as Record<string, unknown>)[part],
+                this.configsStore
+            ) as T;
 
-                return acc;
-            }, this.configsStore) || defaultValue
-        );
+        return result || defaultValue;
     }
 }
