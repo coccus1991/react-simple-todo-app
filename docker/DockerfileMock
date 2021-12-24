@@ -1,4 +1,4 @@
-FROM node:12.18.2
+FROM node:16.13.1
 WORKDIR mock
 COPY ./rest/mock .
 RUN npm i express uuid

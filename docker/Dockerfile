@@ -1,5 +1,5 @@
 #build
-FROM node:12.18.2 as build
+FROM node:16.13.1 as build
 WORKDIR /app
 COPY . .
 RUN npm i

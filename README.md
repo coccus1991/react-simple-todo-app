@@ -16,6 +16,10 @@ This project born with the goal to show how works the following technologies in 
 
 # Dev Section
 
+## Prerequistes
+
+* Node version greater than **14.0.0**
+
 
 
 ## Getting started
