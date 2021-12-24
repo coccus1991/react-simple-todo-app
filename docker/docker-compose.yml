@@ -1,0 +1,19 @@
+version: '3'
+services:
+    nginx-react:
+        build:
+            context: ..
+            dockerfile: ./docker/Dockerfile
+        container_name: ngixreactapp
+        ports:
+            - "8080:80"
+        environment:
+            NODE_ENV: production
+        volumes:
+            - ./configs:/usr/share/nginx/html/configs
+    mock-server:
+       build:
+           context: ..
+           dockerfile: ./docker/DockerfileMock
+       ports:
+           - "8000:8000"
