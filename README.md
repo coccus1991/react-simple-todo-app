@@ -26,7 +26,7 @@ This project born with the goal to show how works the following technologies in 
 
 - `npm i` - Download dependencies and setup husky's configs for git hooks
 
-- `npm run start` - Run **npm run dev** and **npm run mock** simultaneously
+- `npm start` - Run **npm run dev** and **npm run mock** simultaneously
 
 - Open browser page on `http://localhost:3000`;
 
