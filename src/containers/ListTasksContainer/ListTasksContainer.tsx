@@ -8,8 +8,8 @@ import {
     useGetTaskListQuery,
     useUpdateTaskMutation,
 } from '../../store/reducers/TaskApi';
-import TaskEntity from '../../entities/TaskEntity';
 import { useEffect } from 'react';
+import { TaskType } from '../../types/TaskType';
 
 const ListTasksContainer = () => {
     const { data = [] } = useGetTaskListQuery();
@@ -34,12 +34,11 @@ const ListTasksContainer = () => {
         }
     }, [deleteTaskRequest, updateTaskRequest]);
 
-    const onEditStatusHandler = (task: TaskEntity) => {
-        task.completed = !task.completed;
-        updateTask(task);
+    const onEditStatusHandler = (task: TaskType) => {
+        updateTask({ ...task, completed: !task.completed });
     };
 
-    const onDeleteHandler = async (task: TaskEntity) => {
+    const onDeleteHandler = async (task: TaskType) => {
         if (!task.id) return;
 
         const check = await AlertService.confirm({
@@ -63,7 +62,7 @@ const ListTasksContainer = () => {
             }
             return true;
         })
-        .sort((a: TaskEntity, b: TaskEntity) => {
+        .sort((a: TaskType, b: TaskType) => {
             return (b.created_date || 0) - (a.created_date || 0);
         });
 

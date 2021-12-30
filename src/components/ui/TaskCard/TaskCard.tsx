@@ -1,11 +1,11 @@
 import React from 'react';
-import TaskEntity from '../../../entities/TaskEntity';
+import { TaskType } from '../../../types/TaskType';
 import classes from './TaskCard.module.scss';
 
 interface TaskCardComponentInterface {
-    task: TaskEntity;
-    onDelete?: (task: TaskEntity) => void;
-    onEditStatus?: (task: TaskEntity) => void;
+    task: TaskType;
+    onDelete?: (task: TaskType) => void;
+    onEditStatus?: (task: TaskType) => void;
 }
 
 const TaskCard = (props: TaskCardComponentInterface) => {

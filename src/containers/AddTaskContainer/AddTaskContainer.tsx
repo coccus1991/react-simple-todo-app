@@ -1,5 +1,4 @@
 import React, { useRef } from 'react';
-import TaskEntity from '../../entities/TaskEntity';
 import { useNavigate } from 'react-router-dom';
 import AlertService from '../../services/alert/AlertService';
 import { useCreateTaskMutation } from '../../store/reducers/TaskApi';
@@ -27,11 +26,10 @@ const AddTaskContainer = () => {
     const onSubmitHandler = async (form: React.FormEvent<HTMLFormElement>) => {
         form.preventDefault();
 
-        const newTask = new TaskEntity();
-        newTask.name = nameInput.current?.value || '';
-        newTask.description = descriptionInput.current?.value || '';
-
-        await addTask(newTask);
+        await addTask({
+            name: nameInput.current?.value || '',
+            description: descriptionInput.current?.value || '',
+        });
     };
 
     return (

@@ -1,35 +1,51 @@
-import TaskEntity from '../../entities/TaskEntity';
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { ModelMapper } from '../../utilities/MapperLibrary/MapperLibrary';
-// import Config from '../../services/config/config';
+import {
+    BaseQueryFn,
+    createApi,
+    FetchArgs,
+    fetchBaseQuery,
+    FetchBaseQueryError,
+} from '@reduxjs/toolkit/query/react';
+import { TaskType } from '../../types/TaskType';
+import Config from '../../services/config/config';
+
+const baseQuery: BaseQueryFn<
+    string | FetchArgs,
+    unknown,
+    FetchBaseQueryError
+> = async (args, api, extraOptions) => {
+    await Config.getInstance().loadConfig();
+    return fetchBaseQuery({
+        baseUrl: Config.getInstance().getProperty('api.baseUrl', ''),
+    })(args, api, extraOptions);
+};
 
 export const taskApi = createApi({
     reducerPath: 'taskApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8000/api' }),
+    baseQuery,
     tagTypes: ['Tasks'],
     endpoints: (builder) => ({
-        getTaskList: builder.query<Array<TaskEntity>, void>({
+        getTaskList: builder.query<Array<TaskType>, void>({
             query: () => 'task',
-            transformResponse: (response: Array<TaskEntity>) =>
-                response.map((task: TaskEntity) =>
-                    new ModelMapper(TaskEntity).map(task)
-                ),
-            providesTags: () => [{ type: 'Tasks', id: 'LIST' }],
+            providesTags: (tasks = []) => [
+                ...tasks.map(({ id }) => ({ type: 'Tasks' as const, id: id })),
+                { type: 'Tasks', id: 'LIST' },
+            ],
         }),
-        createTask: builder.mutation<TaskEntity, TaskEntity>({
+        createTask: builder.mutation<TaskType, TaskType>({
             query: (task) => ({
                 url: `task`,
                 method: 'POST',
                 body: task,
             }),
+            invalidatesTags: () => [{ type: 'Tasks', id: 'LIST' }],
         }),
-        updateTask: builder.mutation<TaskEntity, TaskEntity>({
+        updateTask: builder.mutation<TaskType, TaskType>({
             query: (task) => ({
                 url: `task`,
                 method: 'PUT',
                 body: task,
             }),
-            invalidatesTags: [{ type: 'Tasks', id: 'LIST' }],
+            invalidatesTags: (task) => [{ type: 'Tasks', id: task?.id }],
         }),
 
         deleteTask: builder.mutation<void, string>({

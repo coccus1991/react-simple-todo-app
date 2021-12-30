@@ -4,6 +4,8 @@ import './assets/style/app.scss';
 import MainHeader from './components/layout/MainHeader/MainHeader';
 import { HashRouter } from 'react-router-dom';
 import LazyComponent from './components/ui/LazyComponent/LazyComponent';
+import { Provider } from 'react-redux';
+import store from './store';
 
 const ListTasksContainer = () => (
     <LazyComponent
@@ -20,26 +22,31 @@ const AddTaskContainer = () => (
 
 const App = () => {
     return (
-        <HashRouter>
-            <MainHeader />
-            <div className="row justify-content-center pt-3">
-                <div className="col-4">
-                    <Routes>
-                        <Route path="tasks" element={<Outlet />}>
+        <Provider store={store}>
+            <HashRouter>
+                <MainHeader />
+                <div className="row justify-content-center pt-3">
+                    <div className="col-4">
+                        <Routes>
+                            <Route path="tasks" element={<Outlet />}>
+                                <Route
+                                    path="list"
+                                    element={<ListTasksContainer />}
+                                />
+                                <Route
+                                    path="add"
+                                    element={<AddTaskContainer />}
+                                />
+                            </Route>
                             <Route
-                                path="list"
-                                element={<ListTasksContainer />}
+                                path="*"
+                                element={<Navigate to="/tasks/list" />}
                             />
-                            <Route path="add" element={<AddTaskContainer />} />
-                        </Route>
-                        <Route
-                            path="*"
-                            element={<Navigate to="/tasks/list" />}
-                        />
-                    </Routes>
+                        </Routes>
+                    </div>
                 </div>
-            </div>
-        </HashRouter>
+            </HashRouter>
+        </Provider>
     );
 };
 
