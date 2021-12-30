@@ -1,20 +1,59 @@
-import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store';
+import React from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
-import { TaskActions } from '../../store/actions/TaskActions';
 import classes from './ListTasksContainer.module.scss';
 import TaskCard from '../../components/ui/TaskCard/TaskCard';
-import TaskEntity from '../../entities/TaskEntity';
 import AlertService from '../../services/alert/AlertService';
+import {
+    useDeleteTaskMutation,
+    useGetTaskListQuery,
+    useUpdateTaskMutation,
+} from '../../store/reducers/TaskApi';
+import TaskEntity from '../../entities/TaskEntity';
+import { useEffect } from 'react';
 
 const ListTasksContainer = () => {
-    let tasks = useSelector((state: RootState) => state.taskStore.tasks);
+    const { data = [] } = useGetTaskListQuery();
+    const [updateTask, updateTaskRequest] = useUpdateTaskMutation();
+    const [deleteTask, deleteTaskRequest] = useDeleteTaskMutation();
     const searchParams = useSearchParams();
+
+    useEffect(() => {
+        if (deleteTaskRequest.isSuccess) {
+            AlertService.success({ text: 'Task deleted with success!' });
+            deleteTaskRequest.reset();
+        }
+
+        if (deleteTaskRequest.isError) {
+            AlertService.error({ text: 'Something went wrong...' });
+            deleteTaskRequest.reset();
+        }
+
+        if (updateTaskRequest.isError) {
+            AlertService.error({ text: 'Something went wrong...' });
+            updateTaskRequest.reset();
+        }
+    }, [deleteTaskRequest, updateTaskRequest]);
+
+    const onEditStatusHandler = (task: TaskEntity) => {
+        task.completed = !task.completed;
+        updateTask(task);
+    };
+
+    const onDeleteHandler = async (task: TaskEntity) => {
+        if (!task.id) return;
+
+        const check = await AlertService.confirm({
+            text: 'Do you wanna delete the task?',
+        });
+
+        if (!check) return;
+
+        deleteTask(task.id);
+    };
 
     const filter = searchParams[0].get('filter') || 'all';
 
-    tasks = tasks
+    const tasks = data
         .filter((task) => {
             switch (filter.toLowerCase()) {
                 case 'todo':
@@ -27,30 +66,6 @@ const ListTasksContainer = () => {
         .sort((a: TaskEntity, b: TaskEntity) => {
             return (b.created_date || 0) - (a.created_date || 0);
         });
-
-    const onEditStatusHandler = (task: TaskEntity) => {
-        task.completed = !task.completed;
-        TaskActions.updateTask(task);
-    };
-
-    const onDeleteHandler = async (task: TaskEntity) => {
-        const check = await AlertService.confirm({
-            text: 'Do you wanna delete the task?',
-        });
-
-        if (!check) return;
-
-        try {
-            TaskActions.deleteTask(task);
-            AlertService.success({ text: 'Task deleted with success!' });
-        } catch (e) {
-            AlertService.error({ text: 'Something went wrong...' });
-        }
-    };
-
-    useEffect(() => {
-        TaskActions.getTasks();
-    }, []);
 
     return (
         <div className={`${classes.ListTasksContainer} row`}>

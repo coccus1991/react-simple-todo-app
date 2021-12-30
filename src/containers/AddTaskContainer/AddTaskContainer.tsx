@@ -1,13 +1,28 @@
 import React, { useRef } from 'react';
-import { TaskActions } from '../../store/actions/TaskActions';
 import TaskEntity from '../../entities/TaskEntity';
 import { useNavigate } from 'react-router-dom';
 import AlertService from '../../services/alert/AlertService';
+import { useCreateTaskMutation } from '../../store/reducers/TaskApi';
+import { useEffect } from 'react';
 
 const AddTaskContainer = () => {
     const nameInput = useRef<HTMLInputElement>(null);
     const descriptionInput = useRef<HTMLTextAreaElement>(null);
     const navigate = useNavigate();
+    const [addTask, addTaskRequest] = useCreateTaskMutation();
+
+    useEffect(() => {
+        if (addTaskRequest.isSuccess) {
+            navigate('/tasks/list');
+            AlertService.success({ text: 'New task added with success!' });
+            addTaskRequest.reset();
+        }
+
+        if (addTaskRequest.isError) {
+            AlertService.error({ text: 'Something went wrong...' });
+            addTaskRequest.reset();
+        }
+    }, [addTaskRequest, navigate]);
 
     const onSubmitHandler = async (form: React.FormEvent<HTMLFormElement>) => {
         form.preventDefault();
@@ -16,13 +31,7 @@ const AddTaskContainer = () => {
         newTask.name = nameInput.current?.value || '';
         newTask.description = descriptionInput.current?.value || '';
 
-        try {
-            await TaskActions.addTask(newTask);
-            AlertService.success({ text: 'New task added with success!' });
-            navigate('/tasks/list');
-        } catch (e) {
-            AlertService.error({ text: 'Something went wrong...' });
-        }
+        await addTask(newTask);
     };
 
     return (
