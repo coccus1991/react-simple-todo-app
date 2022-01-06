@@ -1,0 +1,43 @@
+{{- if .Values.ingress.enabled -}}
+ {{- $fullName := include "helper.fullname" . -}}
+ {{- $servicePort := .Values.service.port }}
+  {{- $ingressApiIsStable := eq (include "helper.ingress.isStable" .) "true" -}}
+
+apiVersion: {{ include "helper.ingress.apiVersion" . }}
+kind: Ingress
+metadata:
+  name: {{ $fullName }}-ingress
+  labels:
+    {{- include "helper.labels" . | nindent 4 }}
+  {{- if .Values.ingress.annotations }}
+  annotations:
+    {{- range $key, $value := .Values.ingress.annotations }}
+    {{ $key }}: {{ tpl $value $ | quote }}
+    {{- end }}
+  {{- end }}
+spec:
+
+{{- if .Values.ingress.tls }}
+  tls:
+{{ tpl (toYaml .Values.ingress.tls) $ | indent 4 }}
+{{- end }}
+
+ {{- range .Values.ingress.hosts }}
+  rules:
+    - host: {{ tpl . $}}
+      http:
+        paths:
+          - path: "/"
+            pathType: Prefix
+            backend:
+              {{- if $ingressApiIsStable }}
+              service:
+                name: {{ $fullName }}-service
+                port:
+                  number: {{ $servicePort }}
+              {{- end}}
+              serviceName: {{ $fullName }}-service
+              servicePort: {{ $servicePort }}
+  {{- end }}
+
+  {{- end }}
