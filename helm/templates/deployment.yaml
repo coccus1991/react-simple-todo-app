@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "helper.fullname" . }}-deployment
+  {{- with .Values.podAnnotations }}
+  annotations:
+    {{- with .Values.podAnnotations }}
+    {{- toYaml . | nindent 8 }}
+    {{- end }}
+  {{- end }}
+  labels:
+    {{- include "helper.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+     {{- include "helper.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+     {{- include "helper.selectorLabels" . | nindent 8 }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+      {{- toYaml . | nindent 8 }}
+    {{- end }}
+      securityContext:
+      {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+          {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}/{{ .Values.image.imageName }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          volumeMounts:
+            - name: config-volume
+              mountPath: /usr/share/nginx/html/configs
+      volumes:
+        - name: config-volume
+          configMap:
+            name: {{ include "helper.fullname" . }}-configmap
+
