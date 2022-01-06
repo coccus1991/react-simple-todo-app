@@ -10,6 +10,7 @@ This project born with the goal to show how works the following technologies in 
 * Husky - https://github.com/typicode/husky
 * Lint staged - https://github.com/okonet/lint-staged
 * Docker - https://www.docker.com
+* Helm - https://helm.sh
 * And others else...
 
 
@@ -79,11 +80,11 @@ With the terminal move on the root project and then:
 
 <hr>
 
-### **Create and run the image**
+### **Create and run the image locally**
 
 #### **Build**
 
-`docker build -f ./docker/Dockerfile -t react-boilerplate:1.0 . `
+`docker build -f ./docker/Dockerfile -t react-boilerplate-app:1.0 . `
 
 #### **Run a container**
 
@@ -99,7 +100,11 @@ In this example we will mount our configs folder in order to override the applic
 
 `docker-compose -f docker/docker-compose.yml up`
 
-In this case will be runned two containers:
+In this case will be run two containers:
 
 * Nginx container which serves the SPA application files
-* Mock container will serves all application's mocked routes
+* Mock container will serve all application's mocked routes
+
+## **Kubernetes**
+You can deploy the application on kubernetes using the **helm chart** contained within the helm directory.
+All the configuration are inside of the **values.yaml** file. For more information about **HELM** you can visit: https://helm.sh/docs/
