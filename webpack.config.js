@@ -17,6 +17,7 @@ module.exports = (env, argv) => {
         entry: {
             client: './src/index.tsx',
         },
+        devtool: devMode ? 'source-map' : false,
         module: {
             rules: [
                 {
@@ -160,6 +161,7 @@ module.exports = (env, argv) => {
 
         //split of the bundle
         optimization: {
+            
             splitChunks: {
                 cacheGroups: {
                     commons: {
