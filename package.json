@@ -1,5 +1,6 @@
 {
     "name": "react-boilerplate",
+    "private": "true",
     "version": "1.0.0",
     "description": "Simple react boilerplate based on webpack",
     "main": "src/index.tsx",
@@ -14,6 +15,9 @@
         "linter": "eslint --fix 'src/**/*.{ts,tsx,js,jsx}'",
         "lintstaged": "lint-staged",
         "prettier": "prettier --write src"
+    },
+    "engines": {
+        "node": ">=14.0.0"
     },
     "author": "",
     "license": "ISC",

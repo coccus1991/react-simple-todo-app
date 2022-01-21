@@ -1,7 +1,7 @@
 {{- if .Values.ingress.enabled -}}
- {{- $fullName := include "helper.fullname" . -}}
- {{- $servicePort := .Values.service.port }}
-  {{- $ingressApiIsStable := eq (include "helper.ingress.isStable" .) "true" -}}
+{{- $fullName := include "helper.fullname" . -}}
+{{- $servicePort := .Values.service.port }}
+{{- $ingressApiIsStable := eq (include "helper.ingress.isStable" .) "true" -}}
 
 apiVersion: {{ include "helper.ingress.apiVersion" . }}
 kind: Ingress
@@ -35,9 +35,10 @@ spec:
                 name: {{ $fullName }}-service
                 port:
                   number: {{ $servicePort }}
-              {{- end}}
+              {{- else }}
               serviceName: {{ $fullName }}-service
               servicePort: {{ $servicePort }}
+              {{- end}}
   {{- end }}
 
   {{- end }}
