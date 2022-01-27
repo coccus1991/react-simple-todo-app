@@ -3,4 +3,4 @@ WORKDIR mock
 COPY ./rest/mock .
 RUN npm i express uuid
 EXPOSE 8000
-CMD ["node", "mock.js"]
+CMD ["node", "mock.mjs"]
