@@ -1,3 +1,3 @@
-const config = [{ name: 'api', file: () => import('./api.json') }];
+const config = [{ name: 'api', file: () => import('./api.json') }]
 
-export default config;
+export default config

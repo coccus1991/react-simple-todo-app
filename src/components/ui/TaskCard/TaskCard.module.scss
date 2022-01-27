@@ -1,17 +1,17 @@
 @import '../../../assets/style/variables';
 
 .TaskCardComponent {
-    background-color: $second-color;
-    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.3);
-    color: $main-color;
-    border-radius: 10px;
-    min-height: 100px;
-    padding: 10px;
+  background-color: $second-color;
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.3);
+  color: $main-color;
+  border-radius: 10px;
+  min-height: 100px;
+  padding: 10px;
 
-    h3 {
-        margin: 0;
-        display: inline-block;
-        color: $main-color;
-        font-size: 1.5em;
-    }
+  h3 {
+    margin: 0;
+    display: inline-block;
+    color: $main-color;
+    font-size: 1.5em;
+  }
 }
